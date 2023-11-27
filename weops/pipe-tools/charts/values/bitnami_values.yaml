@@ -1,0 +1,25 @@
+commonLabels:
+  object: rabbitmq
+
+service:
+  type: NodePort
+
+auth:
+  password: Weops@123
+
+# clustering:
+#   rebalance: true
+
+persistence:
+  enabled: false
+
+readinessProbe:
+  enabled: false
+
+livenessProbe:
+  enabled: false
+
+initScripts:
+  changePasswordScript: |
+    #!/bin/bash
+    rabbitmqctl change_password user Weops@123
