@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"github.com/prometheus/client_golang/prometheus/collectors"
 	"sync"
 	"time"
 
@@ -24,13 +25,14 @@ const (
 	totalQueues            contextValues = "totalQueues"
 )
 
-//RegisterExporter makes an exporter available by the provided name.
+// RegisterExporter makes an exporter available by the provided name.
 func RegisterExporter(name string, f func() Exporter) {
 	exportersMu.Lock()
 	defer exportersMu.Unlock()
 	if f == nil {
 		panic("exporterFactory is nil")
 	}
+	prometheus.Unregister(collectors.NewGoCollector())
 	exporterFactories[name] = f
 }
 
@@ -44,7 +46,7 @@ type exporter struct {
 	lastScrapeOK                 bool
 }
 
-//Exporter interface for prometheus metrics. Collect is fetching the data and therefore can return an error
+// Exporter interface for prometheus metrics. Collect is fetching the data and therefore can return an error
 type Exporter interface {
 	Collect(ctx context.Context, ch chan<- prometheus.Metric) error
 	Describe(ch chan<- *prometheus.Desc)
