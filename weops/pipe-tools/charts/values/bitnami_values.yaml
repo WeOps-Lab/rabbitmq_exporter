@@ -5,6 +5,7 @@ service:
   type: NodePort
 
 auth:
+  username: weops
   password: Weops@123
 
 # clustering:
@@ -18,8 +19,3 @@ readinessProbe:
 
 livenessProbe:
   enabled: false
-
-initScripts:
-  changePasswordScript: |
-    #!/bin/bash
-    rabbitmqctl change_password user Weops@123

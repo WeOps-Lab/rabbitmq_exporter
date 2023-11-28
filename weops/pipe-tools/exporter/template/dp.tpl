@@ -62,8 +62,18 @@ spec:
           allowPrivilegeEscalation: false
           runAsUser: 0
         env:
-          - name: SCRAPE_URI
-            value: http://{{OBJECT}}-{{VERSION}}.{{OBJECT}}:80/server-status?auto
+          - name: RABBIT_USER
+            value: weops
+          - name: RABBIT_PASSWORD
+            value: {{PASS}}
+          - name: RABBIT_URL
+            value: http://rabbitmq-{{VERSION}}.rabbitmq:15672
+          - name: RABBIT_EXPORTERS
+            value: "connections,shovel,federation,exchange,node,queue,memory"
+          - name: RABBIT_TIMEOUT
+            value: "5"
+          - name: SKIPVERIFY
+            value: "false"
         resources:
           requests:
             cpu: 100m
