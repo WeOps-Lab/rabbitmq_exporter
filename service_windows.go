@@ -5,7 +5,7 @@ import (
 	"golang.org/x/sys/windows/svc"
 )
 
-const serviceName = "rabbitmq_exporter"
+const serviceName = "rabbitmq"
 
 func runService() chan bool {
 	stopCh := make(chan bool)
