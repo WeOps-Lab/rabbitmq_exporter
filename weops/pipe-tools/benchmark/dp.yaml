@@ -1,0 +1,39 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: rabbitmq-benchmark
+  namespace: rabbitmq
+spec:
+  schedule: "*/3 * * * *"
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      activeDeadlineSeconds: 300
+      template:
+        spec:
+          nodeSelector:
+            node-role: worker
+          containers:
+          - name: rabbitmq-benchmark-v3-7
+            image: registry-svc:25000/library/pivotalrabbitmq/perf-test:latest
+            imagePullPolicy: IfNotPresent
+            args:
+              - --uri=amqp://weops:guest@rabbitmq-v3-7.rabbitmq:5672
+              - --time=15
+            resources:
+              limits:
+                cpu: 100m
+                memory: 200Mi
+          - name: rabbitmq-benchmark-v3-8
+            image: registry-svc:25000/library/pivotalrabbitmq/perf-test:latest
+            imagePullPolicy: IfNotPresent
+            args:
+              - --uri=amqp://weops:Weops%40123@rabbitmq-v3-8.rabbitmq:5672
+              - --time=15
+            resources:
+              limits:
+                cpu: 100m
+                memory: 200Mi
+
+          restartPolicy: Never
