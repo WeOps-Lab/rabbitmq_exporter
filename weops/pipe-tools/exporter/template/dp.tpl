@@ -74,6 +74,8 @@ spec:
             value: "5"
           - name: SKIPVERIFY
             value: "false"
+          - name: RABBIT_CONNECTION
+            value: loadbalancer
         resources:
           requests:
             cpu: 100m
