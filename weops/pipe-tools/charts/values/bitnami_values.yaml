@@ -19,3 +19,8 @@ readinessProbe:
 
 livenessProbe:
   enabled: false
+
+clustering:
+  rebalance: true
+
+replicaCount: 3
