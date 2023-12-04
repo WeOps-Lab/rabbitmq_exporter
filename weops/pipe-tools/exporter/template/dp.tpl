@@ -69,7 +69,7 @@ spec:
           - name: RABBIT_URL
             value: http://rabbitmq-{{VERSION}}.rabbitmq:15672
           - name: RABBIT_EXPORTERS
-            value: "connections,shovel,federation,exchange,node,queue,memory"
+            value: "connections,exchange,node,queue,memory"
           - name: RABBIT_TIMEOUT
             value: "5"
           - name: SKIPVERIFY
