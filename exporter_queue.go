@@ -13,8 +13,8 @@ func init() {
 }
 
 var (
-	queueLabels    = []string{"cluster", "vhost", "queue", "durable", "policy", "self"}
-	queueLabelKeys = []string{"vhost", "name", "durable", "policy", "state", "node", "idle_since"}
+	queueLabels    = []string{"cluster", "vhost", "queue", "durable", "queue_policy", "self"}
+	queueLabelKeys = []string{"vhost", "name", "durable", "queue_policy", "state", "node", "idle_since"}
 
 	queueGaugeVec = map[string]*prometheus.GaugeVec{
 		"messages_ready":                            newGaugeVec("queue_messages_ready", "Number of messages ready to be delivered to clients.", queueLabels),
@@ -178,7 +178,7 @@ func (e exporterQueue) Collect(ctx context.Context, ch chan<- prometheus.Metric)
 		}
 
 		self := selfLabel(config, queue.labels["node"] == selfNode)
-		labelValues := []string{cluster, queue.labels["vhost"], queue.labels["name"], queue.labels["durable"], queue.labels["policy"], self}
+		labelValues := []string{cluster, queue.labels["vhost"], queue.labels["name"], queue.labels["durable"], queue.labels["queue_policy"], self}
 
 		for key, gaugevec := range e.queueMetricsGauge {
 			if value, ok := queue.metrics[key]; ok {
