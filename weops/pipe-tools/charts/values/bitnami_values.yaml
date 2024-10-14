@@ -7,9 +7,7 @@ service:
 auth:
   username: weops
   password: Weops@123
-
-# clustering:
-#   rebalance: true
+  erlangCookie: weops
 
 persistence:
   enabled: false
@@ -21,6 +19,7 @@ livenessProbe:
   enabled: false
 
 clustering:
+  name: weops_rabbitmq
   rebalance: true
-
-replicaCount: 3
+  enabled: true # 确保 clustering.enabled 设置为 true
+  forceBoot: true  # 强制启动集群
